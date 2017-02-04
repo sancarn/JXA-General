@@ -1,15 +1,24 @@
-function pixelColorAtScreenCoord(displayID,x,y){
-	ObjC.import('Foundation')
-	ObjC.import('AppKit')
-	image = $.CGDisplayCreateImageForRect(displayID,$.CGRectMake(x,y,1,1));
-	bitmap = $.NSBitmapImageRep.alloc.initWithCGImage(image)
-	$.CGImageRelease(image)
-	color = bitmap.colorAtXY($(x),$(y))
-    bitmap.release
-    return [
-			parseInt(255*color.redComponent),	
-			parseInt(255*color.greenComponent),
-			parseInt(255*color.blueComponent),
-			color.alphaComponent
-		   ];
+function pixelColorAtScreenCoord(x,y){
+   ObjC.import('Foundation')
+   ObjC.import('AppKit')
+   rect = $.CGRectMake(x,y,1,1)
+
+   //Get DisplayID from point location.
+   var displays = Ref()
+   $.CGMainDisplayID() //Fully initialise CoreGraphics Framework
+   maxDisplays = 5
+   $.CGGetDisplaysWithRect(rect, maxDisplays,displays,null)
+   displayID = displays[0]
+
+   image = $.CGDisplayCreateImageForRect(displayID,rect);
+   bitmap = $.NSBitmapImageRep.alloc.initWithCGImage(image)
+   $.CGImageRelease(image)
+   color = bitmap.colorAtXY($(x),$(y))
+   bitmap.release
+   return [
+           parseInt(255*color.redComponent),
+           parseInt(255*color.greenComponent),
+           parseInt(255*color.blueComponent),
+           color.alphaComponent
+        ];
 }
