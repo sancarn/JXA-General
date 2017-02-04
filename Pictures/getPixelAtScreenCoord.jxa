@@ -1,0 +1,15 @@
+function pixelColorAtScreenCoord(displayID,x,y){
+	ObjC.import('Foundation')
+	ObjC.import('AppKit')
+	image = $.CGDisplayCreateImageForRect(displayID,$.CGRectMake(x,y,1,1));
+	bitmap = $.NSBitmapImageRep.alloc.initWithCGImage(image)
+	$.CGImageRelease(image)
+	color = bitmap.colorAtXY($(x),$(y))
+    bitmap.release
+    return [
+			parseInt(255*color.redComponent),	
+			parseInt(255*color.greenComponent),
+			parseInt(255*color.blueComponent),
+			color.alphaComponent
+		   ];
+}
