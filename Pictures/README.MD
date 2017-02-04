@@ -78,4 +78,9 @@ function getMaxDisplaysFromRect(rect){
     $.CGGetDisplaysWithRect(rect,0,null,count)
     return count[0]
 }
+var maxDisplays = getMaxDisplaysFromRect(rect)
 ```
+
+[By definition](https://developer.apple.com/reference/coregraphics/1456071-cggetdisplayswithrect) this will return the number of displays the rectangle is being displayed on. 
+
+
