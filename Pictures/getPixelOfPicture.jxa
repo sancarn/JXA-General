@@ -1,0 +1,35 @@
+function getPixel(picturePath,x,y){
+	ObjC.import('Foundation')
+	ObjC.import('AppKit')
+	
+	//Get image from file
+	var img = $.NSImage.alloc.initWithContentsOfFile($(picturePath))
+	
+	//If img is objC's nil then return a blank array
+	if(img==$()){
+	    return []
+	}
+	
+	//Get a point object
+	var pnt = $.NSMakePoint(x,y)
+	
+	//Target the image
+	img.lockFocus
+	
+	//Target read point from target
+	var clr = $.NSReadPixel(pnt)
+	
+	//Untarget the image
+	img.unlockFocus
+	
+	//Release img - saving memory
+	img.release
+	
+	//Return R,G,B and A
+	return [
+			parseInt(255*clr.redComponent),	
+			parseInt(255*clr.greenComponent),
+			parseInt(255*clr.blueComponent),
+			clr.alphaComponent
+		   ];
+}
