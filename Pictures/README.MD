@@ -49,11 +49,33 @@ function getDisplayFromRect(x,y,w,h){
 
     //Get rectangle from x,y,w,h
     rect = $.CGRectMake(x,y,w,h)
-
+    
+    //I have 2 displays so I am using 2 here...
+    var maxDisplays = 2
+    
     //Get displays from rectangle above
-    $.CGGetDisplaysWithRect(rect,2,mArr,null)
+    $.CGGetDisplaysWithRect(rect,maxDisplays,mArr,null)
 
     //Return first display from returned rectangles array.
     return mArr[0]
+}
+```
+
+## MaxDisplays
+
+The problem with the above code is, if a rectangly crosses over 2+ displays the 3rd and 4th displays won't be picked up. This is because we still need to modify the `maxDisplays` parameter of CGGetDisplaysWithRect(). I asked StackOverflow what the purpose of this parameter was and [got this response](http://stackoverflow.com/a/42035741/6302131).
+
+Ultimately the answer is that the `displays` parameter isn't a regular Cocoa/CoreFoundation array, and thus maxDisplays is required to force the function to not return an array bigger than the one you put in.
+
+There are 2 solutions to this:
+
+1. Use `maxDisplays = 32`. This may not be memory efficient but 32 is the maximum number of displayIDs that can be returned by this function. This is not explicitely documented.
+2. Alternatively use the following code:
+
+```
+function getMaxDisplaysFromRect(rect){
+    var count = Ref()
+    $.CGGetDisplaysWithRect(rect,0,null,count)
+    return count[0]
 }
 ```
