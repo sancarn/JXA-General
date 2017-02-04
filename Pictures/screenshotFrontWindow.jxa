@@ -1,0 +1,42 @@
+function screenshotFrontWindow(){
+    var system = Application("System Events")
+    var processes = system.processes()
+    getFrontProc: {
+        for(var i = 0; i<processes.length;i++){
+            if(processes[i].frontmost()){
+                break getFrontProc
+            }
+        }
+    }
+    var window = processes[i].windows[0]
+    var frame = window.attributes['AXFrame'].value()
+    var ffdFrame = [frame[0], frame[1], frame[2]-frame[0], frame[3]-frame[1]]
+    screenshotRegionToFile(ffdFrame[0], ffdFrame[1], ffdFrame[2], ffdFrame[3],"/Users/Sancarn/Pictures/MyCurrentWindow.png")
+}
+
+function screenshotRegionToFile(x,y,w,h,path){
+	//Largely ported from:
+	//NSBitmapImageRep *imgRep = [[image representations] objectAtIndex: 0];
+	//NSData *data = [imgRep representationUsingType: NSPNGFileType properties: nil];
+	//[data writeToFile: @"/path/to/file.png" atomically: NO];
+	
+	ObjC.import('Foundation')
+	ObjC.import('AppKit')
+	
+    var rect = $.CGRectMake(x,y,w,h)
+    
+	//Get DisplayID from rectangle
+	var displays = Ref()
+	$.CGMainDisplayID() //Fully initialise CoreGraphics Framework
+	$.CGGetDisplaysWithRect(rect,1,displays,null)
+	displayID = displays[0]
+
+	image = $.CGDisplayCreateImageForRect(displayID,rect);
+	bitmap = $.NSBitmapImageRep.alloc.initWithCGImage(image)
+	pngData = bitmap.representationUsingTypeProperties($.NSPNGFileType,$())
+	pngData.writeToFileAtomically(path,true)
+	displayID.release
+	image.release
+	bitmap.release
+	pngData.release
+}
