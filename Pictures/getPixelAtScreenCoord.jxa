@@ -6,7 +6,10 @@ function pixelColorAtScreenCoord(x,y){
    //Get DisplayID from point location.
    var displays = Ref()
    $.CGMainDisplayID() //Fully initialise CoreGraphics Framework
-   maxDisplays = 5
+   
+   //Only 1 displayID should be returned for a pixel.
+   maxDisplays = 1
+
    $.CGGetDisplaysWithRect(rect, maxDisplays,displays,null)
    displayID = displays[0]
 
