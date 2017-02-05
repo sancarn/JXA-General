@@ -12,7 +12,16 @@ function screenshotRegionToFile(x,y,w,h,path){
 	//Get DisplayID from rectangle
 	var displays = Ref()
 	$.CGMainDisplayID() //Fully initialise CoreGraphics Framework
-	$.CGGetDisplaysWithRect(rect,1,displays,null)
+	
+	//get maxDisplays
+	// this isn't totally supported.
+	// if a rectangle is displayed on multiple displays
+	// only the first will be used to produce the screenshot.
+	count=Ref()
+	$.CGGetDisplaysWithRect(rect,0,null,count)
+	maxDisplays = count[0]
+	
+	$.CGGetDisplaysWithRect(rect,maxDisplays,displays,null)
 	displayID = displays[0]
 
 	image = $.CGDisplayCreateImageForRect(displayID,rect);
