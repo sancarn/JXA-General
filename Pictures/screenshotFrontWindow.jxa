@@ -23,12 +23,20 @@ function screenshotRegionToFile(x,y,w,h,path){
 	ObjC.import('Foundation')
 	ObjC.import('AppKit')
 	
-    var rect = $.CGRectMake(x,y,w,h)
+        var rect = $.CGRectMake(x,y,w,h)
     
 	//Get DisplayID from rectangle
 	var displays = Ref()
 	$.CGMainDisplayID() //Fully initialise CoreGraphics Framework
-	$.CGGetDisplaysWithRect(rect,1,displays,null)
+	
+	//Get Displays rectangle is intersecting
+	// this isn't fully supported as windows on 1+ displays
+	// will not be rendered as images.
+	count=Ref()
+        $.CGGetDisplaysWithRect(rect,0,null,count)
+        maxDisplays = count[0]
+	
+	$.CGGetDisplaysWithRect(rect,maxDisplays,displays,null)
 	displayID = displays[0]
 
 	image = $.CGDisplayCreateImageForRect(displayID,rect);
