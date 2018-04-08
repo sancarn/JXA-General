@@ -45,8 +45,6 @@ For `AXSomethingAwesome` call the function
 // Get the process itself:
 var oProcess      = Application('MyProcess') 
 oProcess.includeStandardAdditions=true
-
-//Standard information
-infos = [oProcess.displayedName(),oProcess.bundleIdentifier(),oProcess.applicationFile().path(),oProcess.applicationFile().posixPath()]
-
+//All standard additions are listed in script dictionary 
+// -->   /private/var/folders/n6/b57bg5554y7bv36xbsfhmqf80000gn/T/StandardAdditions.sdef
 
