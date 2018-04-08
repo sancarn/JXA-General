@@ -49,4 +49,6 @@ oProcess.includeStandardAdditions=true
 // -->   /private/var/folders/n6/b57bg5554y7bv36xbsfhmqf80000gn/T/StandardAdditions.sdef
 //(That may be temporary... If so go to script editor > File > Open Dictionary... > StandardAdditions.osax)
 
+//Other data
+data = [myProcessGUI.displayedName(),myProcessGUI.bundleIdentifier(),myProcessGUI.applicationFile().path(),myProcessGUI.applicationFile().posixPath()]
 
