@@ -33,11 +33,8 @@ Lessons Learnt:
 .attributes()     == Attributes / Properties
 .actions()        == Methods
 
-To get access to a particular attribute or method, call it as a function.
-
-E.G.
-For `AXSomethingAwesome` call the function
-.somethingAwesome()
+Attributes can be accessed like this:
+.attributes['AXSomethingAwesome'].value()
 */
 
 //Other lessons:
