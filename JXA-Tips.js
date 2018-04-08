@@ -1,12 +1,43 @@
 //dealing with GUIs
 system = Application('System Events')
-myProcessGUI = system.processes("MyProcess")
+
+//Get all processes
+system.processes()
+
+//Get myprocess
+myProcessGUI = system.processes["MyProcess"]
+
+//Get all of my processes menu bars:
+myProcessMenuBars = myProcessGUI.menuBars()
+
+//Get first menu bar
 myProcessMenu = myProcessGUI.menuBars[0]
 
 //List all elements in a particular system events element:
 allMenuItems = myProcessMenu.entireContents()
 
+//Get last item
+mnuItem = allMenuItems[-1]
+
 //List all actions that can be performed on a specific element:
-mnuActions = allMenuItems[-1].actions()
+mnuItemActions = mnuItem.actions()
+
+//List all attributes of a specific element
+mnuItemAttribs = mnuItem.attributes()
+myProcessAttribs = myProcessGUI.attributes()
+
+/*
+Lessons Learnt:
+--------------
+.entireContents() == All descendants
+.attributes()     == Attributes / Properties
+.actions()        == Methods
+
+To get access to a particular attribute or method, call it as a function.
+
+E.G.
+For `AXSomethingAwesome` call the function
+.somethingAwesome()
+*/
 
 
