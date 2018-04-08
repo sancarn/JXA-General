@@ -40,4 +40,13 @@ For `AXSomethingAwesome` call the function
 .somethingAwesome()
 */
 
+//Other lessons:
+
+// Get the process itself:
+var oProcess      = Application('MyProcess') 
+oProcess.includeStandardAdditions=true
+
+//Standard information
+infos = [oProcess.displayedName(),oProcess.bundleIdentifier(),oProcess.applicationFile().path(),oProcess.applicationFile().posixPath()]
+
 
